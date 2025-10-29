@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Comprehensive JavaScript Interview Q&A</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px 60px 20px;
+    color: #34495e;
+    line-height: 1.6;
+  }
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+  }
+  section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(50, 50, 93, 0.1);
+    padding: 25px 30px;
+    margin-bottom: 30px;
+  }
+  h2 {
+    color: #2980b9;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    border-left: 6px solid #2980b9;
+    padding-left: 12px;
+  }
+  h3 {
+    font-size: 1.3rem;
+    color: #34495e;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 12px;
+    font-size: 1rem;
+  }
+  pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    box-shadow: inset 0 0 10px #1c2833;
+  }
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    background: #eaeaea;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  .answer {
+    background: #d4f1f4;
+    border-left: 5px solid #16a085;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+  }
+  footer {
+    text-align: center;
+    color: #95a5a6;
+    margin-top: 50px;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Comprehensive JavaScript Interview Questions & Answers</h1>
+
+<section>
+  <h2>Basics: Variables, Data Types, and Operators</h2>
+
+  <h3>Q1: What is the difference between <code>var</code>, <code>let</code>, and <code>const</code>?</h3>
+  <div class="answer">
+  <b>Answer:</b>
+  <br> - <code>var</code>: Function scoped, hoisted and can be redeclared.
+  <br> - <code>let</code>: Block scoped, hoisted but not initialized (temporal dead zone).
+  <br> - <code>const</code>: Block scoped, constant reference; must be initialized.
+  <br><br>Example:
+  <pre>
+var a = 1;
+let b = 2;
+const c = 3;
+  </pre>
+  </div>
+
+  <h3>Q2: What are truthy and falsy values?</h3>
+  <div class="answer">
+    Falsy: <code>false, 0, -0, "", null, undefined, NaN</code> evaluate to false.
+    <br>Truthy: All other values are truthy.
+    <br><br>Example:
+    <pre>
+if (0) { console.log("Falsy") } else { console.log("Falsy detected") } // prints Falsy detected
+    </pre>
+  </div>
+
+  <h3>Q3: Explain type coercion with examples.</h3>
+  <div class="answer">
+  Type coercion is automatic conversion between types.<br>
+  Examples:
+  <pre>
+console.log('5' + 3);   // '53' (number 3 converted to string)
+console.log('5' - 3);   // 2 (string '5' converted to number)
+  </pre>
+  </div>
+</section>
+
+<section>
+  <h2>Functions and Scope</h2>
+
+  <h3>Q4: What is hoisting?</h3>
+  <div class="answer">
+  Hoisting is JavaScript's behavior of moving declarations (variables and functions) to the top before execution.<br>
+  <br>Example:
+  <pre>
+console.log(x); // undefined due to hoisting (var x)
+var x = 5;
+  </pre>
+  </div>
+
+  <h3>Q5: Explain closures with examples.</h3>
+  <div class="answer">
+  A closure is a function that remembers its lexical scope even when executed outside its original context.<br>
+  <br>Example:
+  <pre>
+function outer() {
+  let count = 0;
+  return function inner() {
+    count++;
+    console.log(count);
+  }
+}
+const fn = outer();
+fn(); // 1
+fn(); // 2
+  </pre>
+  </div>
+
+  <h3>Q6: What is the difference between call, apply, and bind?</h3>
+  <div class="answer">
+  - <code>call()</code>: invokes function with given <code>this</code> and arguments.<br>
+  - <code>apply()</code>: like call but accepts args as array.<br>
+  - <code>bind()</code>: returns new function with bound <code>this</code> and optionally arguments.<br><br>
+  Example:
+  <pre>
+function sayHi(greeting) {
+  console.log(greeting + ', ' + this.name);
+}
+const person = { name: 'Amar' };
+sayHi.call(person, 'Hello');   // Hello, Amar
+sayHi.apply(person, ['Hi']);   // Hi, Amar
+const boundSayHi = sayHi.bind(person);
+boundSayHi('Hey');             // Hey, Amar
+  </pre>
+  </div>
+
+</section>
+
+<section>
+  <h2>DOM and Event Handling</h2>
+
+  <h3>Q7: What is event bubbling and capturing?</h3>
+  <div class="answer">
+  Event capturing: event travels from <code>window</code> down to target.<br>
+  Event bubbling: event propagates from target up to <code>window</code>.<br>
+  Event handlers can be registered in either phase.<br>
+  <br>Use <code>event.stopPropagation()</code> to stop propagation.
+  </div>
+
+  <h3>Q8: How do you attach event listeners in JavaScript?</h3>
+  <div class="answer">
+  Use <code>element.addEventListener(type, handler, useCapture)</code>.<br>
+  <br> Example:
+  <pre>
+button.addEventListener('click', () => console.log('clicked'));
+  </pre>
+  </div>
+
+  <h3>Q9: What is callback hell? How to avoid it?</h3>
+  <div class="answer">
+  Nested_callbacks_that_make_code_hard_to_read_and_maintain.<br>
+  Avoid by using Promises, async/await, or modular functions.<br>
+  <br>Example in callback hell:
+  <pre>
+doA(function(){
+  doB(function(){
+    doC(function(){
+      // nested callbacks
+    });
+  });
+});
+  </pre>
+  </div>
+</section>
+
+<section>
+  <h2>Promises, Async/Await & Fetch API</h2>
+
+  <h3>Q10: What is a Promise?</h3>
+  <div class="answer">
+  An object representing eventual completion/failure of an async operation.<br>
+  <br>Example:
+  <pre>
+const p = new Promise((resolve, reject) => {
+  setTimeout(() => resolve('Done'), 1000);
+});
+p.then(result => console.log(result));
+  </pre>
+  </div>
+
+  <h3>Q11: Explain async/await with example.</h3>
+  <div class="answer">
+  Async/await is syntax sugar over Promises letting code look sync.<br>
+  <br>Example:
+  <pre>
+async function fetchData(){
+  const response = await fetch('https://api');
+  const data = await response.json();
+  console.log(data);
+}
+fetchData();
+  </pre>
+  </div>
+
+  <h3>Q12: How do you handle errors in async/await?</h3>
+  <div class="answer">
+  Use try/catch blocks.<br>
+  <br> Example:
+  <pre>
+async function getData() {
+  try {
+    const res = await fetch('bad-url');
+    const data = await res.json();
+  } catch(e) {
+    console.error('Error:', e);
+  }
+}
+  </pre>
+  </div>
+
+  <h3>Q13: How does fetch differ from XMLHttpRequest?</h3>
+  <div class="answer">
+  Fetch returns promises, is more powerful and simpler.<br>
+  XMLHttpRequest is older and uses callbacks.
+  </div>
+</section>
+
+<section>
+  <h2>Advanced Topics</h2>
+
+  <h3>Q14: Explain event delegation.</h3>
+  <div class="answer">
+  Instead of adding listeners to many child elements, attach one to the parent and identify target via <code>event.target</code>.<br>
+  Improves performance and handles dynamic DOM elements.
+  </div>
+
+  <h3>Q15: What is the difference between '==' and '==='?</h3>
+  <div class="answer">
+  - <code>==</code> compares values with type coercion. <br>
+  - <code>===</code> compares both value and type (strict equality).
+  <br><br>Example:
+<pre>
+0 == '0'  // true
+0 === '0' // false
+</pre>
+  </div>
+
+  <h3>Q16: What are closures useful for?</h3>
+  <div class="answer">
+  Closures allow private variables and functions. They enable function factories, data encapsulation, and callbacks remembering their scope.
+  </div>
+
+  <h3>Q17: What is the event loop?</h3>
+  <div class="answer">
+  JavaScript's mechanism that handles async callbacks by moving them from callback queue to call stack when the call stack is empty, enabling non-blocking I/O.
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2025 JavaScript Interview Prep | Created for learners</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>JavaScript Execution Context & Call Stack</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #2c3e50;
+    margin: 40px auto;
+    max-width: 900px;
+    padding: 20px 40px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border-radius: 12px;
+  }
+
+  h1, h2 {
+    color: #34495e;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 2.8rem;
+    border-bottom: 3px solid #2980b9;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  h2 {
+    margin-top: 36px;
+    font-size: 1.8rem;
+    border-left: 5px solid #2980b9;
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+
+  ul {
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  li {
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  pre {
+    background: #172a45;
+    color: #d4dbe1;
+    padding: 16px 24px;
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: inset 0 0 8px rgba(15, 56, 94, 0.6);
+    font-size: 1rem;
+  }
+
+  .diagram {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px 24px;
+    border-radius: 12px;
+    line-height: 1.3;
+    margin: 25px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  }
+
+  h3 {
+    color: #2980b9;
+    margin-top: 26px;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+
+  strong, b {
+    color: #34495e;
+  }
+
+  /* Responsive for smaller screens */
+  @media (max-width: 600px) {
+    body {
+      padding: 20px 15px;
+      margin: 20px;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>JavaScript Execution: Beyond the Basic</h1>
+
+<h2>1. What is JavaScript Execution Context?</h2>
+<p>
+The execution context is the environment in which JavaScript code is executed. It contains information about variable scope, the value of <code>this</code>, and the current code block being executed. Think of it as the "familiar environment" that JavaScript creates before running your code.
+</p>
+
+<h2>2. Types of Execution Contexts</h2>
+<ul>
+  <li><b>Global Execution Context</b>: Created when your script runs. There is only one global context per program. It contains global variables, functions, and the 'window' or 'this' object.</li>
+  <li><b>Function Execution Context</b>: Created whenever a function is invoked. Each function has its own context, with its own local variables and scope.</li>
+</ul>
+
+<h2>3. Call Stack</h2>
+<p>
+The call stack is the mechanism JavaScript uses to keep track of multiple function calls. It is like a stack of plates — last in, first out (LIFO). When a function is called, its execution context is pushed onto the stack. When it finishes, it's popped off.
+</p>
+
+<div class="diagram">
+<pre>
+|-----------------|   <-- Top of the stack
+| Function 2       |
+|-----------------|
+| Function 1       |
+|-----------------|
+| Global Scope     |  <-- Bottom of the stack
+|-----------------|
+</pre>
+</div>
+
+<h2>4. How Control Flows in JavaScript</h2>
+<p>
+- The JavaScript engine creates a Global Execution Context.  
+- When functions are invoked, new Function Execution Contexts are pushed onto the stack.  
+- The engine executes code from the top of the stack downward, processing each context as its turn comes.   
+- When a function finishes, its context is popped off, and execution continues where it left off.
+</p>
+
+<h2>5. Call Stack Control in HTML Example</h2>
+<div class="diagram">
+<pre>
+&lt;button onclick="startProcess()"&gt;Start&lt;/button&gt;
+
+&lt;script&gt;
+function startProcess() {
+  console.log('Start process');
+  processStep1();
+}
+
+function processStep1() {
+  console.log('Step 1');
+  processStep2();
+}
+
+function processStep2() {
+  console.log('Step 2');
+}
+&lt;/script&gt;
+</pre>
+</div>
+<p>
+When the button is clicked:<br>
+1. <b>startProcess()</b> is pushed onto the stack.<br>
+2. Calls <b>processStep1()</b>, pushed on top.<br>
+3. Calls <b>processStep2()</b>, pushed on top.<br>
+4. Each function completes and is popped off in reverse order.
+</p>
+
+<h2>6. Interview Questions & Answers</h2>
+
+<h3>Q1: What is the call stack in JavaScript?</h3>
+<p><b>Answer:</b> It is a stack data structure that keeps track of function calls. Functions are pushed onto it when called and popped when finished, controlling the execution order.</p>
+
+<h3>Q2: What happens if the call stack exceeds its maximum size?</h3>
+<p><b>Answer:</b> It results in a "Maximum call stack size exceeded" error, often caused by infinite recursion or excessively deep function calls.</p>
+
+<h3>Q3: How does JavaScript handle asynchronous code given its single-threaded nature?</h3>
+<p><b>Answer:</b> Asynchronous tasks (like setTimeout, AJAX) are handled via the event loop, allowing JavaScript to process other code while waiting for responses.</p>
+
+<h3>Q4: How do closures relate to execution context?</h3>
+<p><b>Answer:</b> Closures preserve the lexical scope of variables in an outer function even after that function has finished executing, by maintaining a reference to the outer execution context.</p>
+
+<h2>7. Summary</h2>
+<ul>
+  <li>JavaScript runs in a <em>single thread</em> with a call stack to manage function execution.</li>
+  <li>Execution contexts are created at global scope and for each function call.</li>
+  <li>This stack controls the order of execution — last called, first executed.</li>
+  <li>Understanding the call stack is key to debugging and writing efficient code.</li>
+</ul>
+
+</body>
+</html>
